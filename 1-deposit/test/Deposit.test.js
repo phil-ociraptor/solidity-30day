@@ -17,7 +17,7 @@ describe("Deposit contract", function () {
     deposit = await Deposit.deploy();
   });
 
-  describe("Deposits and Withdraws", async () => {
+  describe("ERC20 Deposits and Withdraws", async () => {
     it("should allow deposits", async () => {
       await erc20.approve(deposit.address, ethers.constants.MaxUint256);
 
@@ -50,6 +50,59 @@ describe("Deposit contract", function () {
 
       const res = await deposit.balanceOf(erc20.address, owner.address);
       expect(res).to.be.eq(500);
+    });
+  });
+
+  describe("ETH Deposits and Withdraws", async () => {
+    it("should allow deposits", async () => {
+      await deposit.depositETH({ value: ethers.constants.WeiPerEther });
+
+      const res = await deposit.balanceOfETH(owner.address);
+      expect(res).to.be.eq(ethers.constants.WeiPerEther);
+    });
+
+    it("should allow deposits (via receive)", async () => {
+      await owner.sendTransaction({
+        to: deposit.address,
+        value: ethers.constants.WeiPerEther,
+      });
+
+      const res = await deposit.balanceOfETH(owner.address);
+      expect(res).to.be.eq(ethers.constants.WeiPerEther);
+    });
+
+    it("should allow deposits (via fallback)", async () => {
+      await owner.sendTransaction({
+        to: deposit.address,
+        value: ethers.constants.WeiPerEther,
+        data: "0x1234567890", // garbage data
+      });
+
+      const res = await deposit.balanceOfETH(owner.address);
+      expect(res).to.be.eq(ethers.constants.WeiPerEther);
+    });
+
+    it("should allow withdraws", async () => {
+      await deposit.depositETH({ value: ethers.constants.WeiPerEther });
+      await deposit.withdrawETH(ethers.constants.WeiPerEther);
+
+      const res = await deposit.balanceOfETH(owner.address);
+      expect(res).to.be.eq(0);
+    });
+
+    it("should not allow withdraws for more than balanceOfETH", async () => {
+      await deposit.depositETH({ value: ethers.constants.WeiPerEther });
+      try {
+        await deposit.withdrawETH(
+          ethers.constants.WeiPerEther.add(ethers.constants.One)
+        );
+        expect.fail("should never reach because withdraw should fail");
+      } catch (e) {
+        expect(e.message).to.match(/cannot withdraw more than balance/);
+      }
+
+      const res = await deposit.balanceOfETH(owner.address);
+      expect(res).to.be.eq(ethers.constants.WeiPerEther);
     });
   });
 });
