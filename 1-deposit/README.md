@@ -4,7 +4,11 @@ For the first challenge, wrote a contract that accepts deposits and withdraws of
 
 It also uses the off the shelf `ERC20PresetFixedSupply` contract to implement an ERC-20.
 
-Days: 1, 2
+Days: 1, 2, 3
+
+1. Follow the Hardhat tutorial to set up env
+2. Use Remix to implement the ERC-20 Deposit/Withdraw features
+3. Use Remix to implement ETH Deposit/Withdraw features
 
 Some learnings:
 
