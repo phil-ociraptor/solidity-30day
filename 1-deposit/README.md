@@ -1,6 +1,6 @@
 ## #1 - Deposit
 
-For the first challenge, wrote a contract that accepts deposits and withdraws of ERC-20 tokens.
+For the first challenge, wrote a contract that accepts deposits and withdraws of ERC-20 tokens. And then extended it to deposit and withdraw ETH.
 
 It also uses the off the shelf `ERC20PresetFixedSupply` contract to implement an ERC-20.
 
