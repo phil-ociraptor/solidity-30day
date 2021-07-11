@@ -20,6 +20,7 @@ Learnings
 1.  `delegatecall` is used for "delegating" the internals of one smart contract to another. It is only useful for upgrading smart contracts or implementing library functions. In `delegatcall`, the `msg.sender`and `msg.value` do not change when calling the other contract, and the storage context is the calling contract. `delegatecall` does not affect the calling contract at all.
 2. `tx.origin` is always the EOA
 3. For Argent and Gnosis `call`, the `tx.origin != msg.sender`
+4. From what I can tell, smart contract wallets are essentially puppets that are controlled by EOAs. A better name for them might just be Proxy Wallets instead of Smart Contract Wallets, but whatever.
 
 
 References:
