@@ -2,7 +2,7 @@
 
 For the second challenge, writing a simple smart contract wallet to help me understand how they work and when they might cause UX issues.
 
-Days: 4, 5
+Days: 4, 5, 6
 
 Running tests:
 ```
@@ -14,6 +14,7 @@ Steps
 
 1. More familiarity with Hardhat using `npx hardhat` to set up project
 2. Reading about Gnosis Safe's `execTransaction` ([link](https://docs.gnosis.io/safe/docs/contracts_tx_execution/)) and Argent Vault's `invoke` ([link](https://github.com/argentlabs/argent-contracts/blob/develop/contracts/wallet/BaseWallet.sol#L126)). Gnosis allows choice of `call` and `delegatecall`. Argent only has `call`
+3. Impement a smart contract that does `call` and `delegatecall` and most importantly test it to understand the behavior of `call` and `delegatecall`
 
 Learnings
 
